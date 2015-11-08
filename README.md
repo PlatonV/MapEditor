@@ -1,2 +1,2 @@
 # MapEditor
-Now only works with 1s.
+You can also change block type with D1, D2(number keys).

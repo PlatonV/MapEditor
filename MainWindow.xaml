@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MapEditor"
         mc:Ignorable="d"
-        Title="MainWindow" Height="840" Width="1280">
+        Title="MainWindow" Height="840" Width="1280" KeyUp="Window_KeyUp">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -28,11 +28,11 @@
                 <Label>Block type:</Label>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel>
-                        <Button x:Name="btn_Red" Background="Red" Width="50" Height="50" Margin="5px" BorderBrush="WhiteSmoke" IsEnabled="False"></Button>
+                        <Button x:Name="btn_Red" Background="Red" Width="50" Height="50" Margin="5px" BorderBrush="WhiteSmoke" BorderThickness="3" IsEnabled="False" Click="btn_Red_Click"></Button>
                         <Label HorizontalAlignment="Center">1</Label>
                     </StackPanel>
                     <StackPanel>
-                        <Button x:Name="btn_Black" Background="Black" Width="50" Height="50" Margin="5px" BorderBrush="WhiteSmoke" IsEnabled="False"></Button>
+                        <Button x:Name="btn_Black" Background="Black" Width="50" Height="50" Margin="5px" BorderBrush="WhiteSmoke" BorderThickness="0" IsEnabled="False" Click="btn_Black_Click"></Button>
                         <Label HorizontalAlignment="Center">2</Label>
                     </StackPanel>
                 </StackPanel>

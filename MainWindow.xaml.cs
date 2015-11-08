@@ -81,13 +81,14 @@ namespace MapEditor
         {
             if (mat[y / cell_size, x / cell_size] != selectedBlock)
             {
+                RemoveBlock(x, y);
                 mat[y / cell_size, x / cell_size] = selectedBlock;
 
                 Rectangle rect = new Rectangle()
                 {
                     Width = cell_size,
                     Height = cell_size,
-                    Fill = Brushes.Red
+                    Fill = selectedBlock == 1 ? Brushes.Red : Brushes.Black
                 };
 
                 Canvas.SetLeft(rect, x / cell_size * cell_size);
@@ -143,6 +144,8 @@ namespace MapEditor
                 btn_Reset.IsEnabled = true;
                 btn_Save.IsEnabled = true;
                 btn_Randomize.IsEnabled = true;
+                btn_Red.IsEnabled = true;
+                btn_Black.IsEnabled = true;
             }
         }
 
@@ -177,6 +180,36 @@ namespace MapEditor
         private void btn_Reset_Click(object sender, RoutedEventArgs e)
         {
             ResetMap();
+        }
+
+        private void btn_Red_Click(object sender, RoutedEventArgs e)
+        {
+            selectedBlock = 1;
+            btn_Red.BorderThickness = new Thickness(3);
+            btn_Black.BorderThickness = new Thickness(0);
+        }
+
+        private void btn_Black_Click(object sender, RoutedEventArgs e)
+        {
+            selectedBlock = 2;
+            btn_Red.BorderThickness = new Thickness(0);
+            btn_Black.BorderThickness = new Thickness(3);
+        }
+
+        private void Window_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.D1)
+            {
+                selectedBlock = 1;
+                btn_Red.BorderThickness = new Thickness(3);
+                btn_Black.BorderThickness = new Thickness(0);
+            }
+            if (e.Key == Key.D2)
+            {
+                selectedBlock = 2;
+                btn_Red.BorderThickness = new Thickness(0);
+                btn_Black.BorderThickness = new Thickness(3);
+            }
         }
     }
 }
