@@ -1,0 +1,40 @@
+﻿<Window x:Class="MapEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MapEditor"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="840" Width="1280">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Canvas x:Name="Canvas" Background="White" Grid.Column="0" 
+                MouseMove="Canvas_MouseMove">
+            <Canvas.RenderTransform>
+                <TranslateTransform x:Name="canvasTransform"/>
+            </Canvas.RenderTransform>
+        </Canvas>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Background="DarkGray">
+            <StackPanel>
+                <Label FontSize="24" FontWeight="Bold" HorizontalContentAlignment="Center">Map Editor</Label>
+                <Button x:Name="btn_Save" Height="50px" FontSize="16" Margin="5px">Save</Button>
+                <Button x:Name="btn_Open" Height="50px" FontSize="16" Margin="5px">Open</Button>
+                <Button x:Name="btn_Reset" Height="50px" FontSize="16" Margin="5px">Reset</Button>
+                <Label>Block type:</Label>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel>
+                        <Button x:Name="btn_Red" Background="Red" Width="50" Height="50" Margin="5px"></Button>
+                        <Label HorizontalAlignment="Center">1</Label>
+                    </StackPanel>
+                    <StackPanel>
+                        <Button x:Name="btn_Black" Background="Black" Width="50" Height="50" Margin="5px"></Button>
+                        <Label HorizontalAlignment="Center">2</Label>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
