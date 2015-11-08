@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,7 +25,8 @@ namespace MapEditor
         int mat_width;
         int mat_height;
         int cell_size;
-        int[,] mat = new int[100,100];
+        int selectedBlock;
+        int[,] mat = new int[100, 100];
 
         public MainWindow()
         {
@@ -32,6 +35,7 @@ namespace MapEditor
             mat_width = 10;
             mat_height = 10;
             cell_size = 800 / mat_height;
+            selectedBlock = 1;
 
             for (int i = 0; i <= mat_width * cell_size; i += cell_size)
             {
@@ -68,7 +72,7 @@ namespace MapEditor
 
         private void PutBlock(int x, int y)
         {
-            mat[x / cell_size, y / cell_size] = 1;
+            mat[y / cell_size, x / cell_size] = selectedBlock;
 
             Rectangle rect = new Rectangle()
             {
@@ -85,7 +89,7 @@ namespace MapEditor
 
         private void RemoveBlock(int x, int y)
         {
-            mat[x / cell_size, y / cell_size] = 0;
+            mat[y / cell_size, x / cell_size] = 0;
 
             foreach (UIElement el in Canvas.Children)
             {
@@ -98,7 +102,7 @@ namespace MapEditor
             }
         }
 
-private void Canvas_MouseMove(object sender, MouseEventArgs e)
+        private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
             Canvas c = sender as Canvas;
             int x = (int)e.GetPosition(c).X;
@@ -110,10 +114,28 @@ private void Canvas_MouseMove(object sender, MouseEventArgs e)
                 PutBlock(x, y);
             }
 
-            if(Mouse.RightButton == MouseButtonState.Pressed && x < cell_size * mat_width
+            if (Mouse.RightButton == MouseButtonState.Pressed && x < cell_size * mat_width
                 && y < cell_size * mat_height && mat[x / cell_size, y / cell_size] != 0)
             {
                 RemoveBlock(x, y);
+            }
+        }
+
+        private void btn_Save_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                string exportString = "";
+
+                for (int i = 0; i < mat_height; ++i)
+                {
+                    for (int j = 0; j < mat_width; ++j)
+                        exportString += mat[i, j].ToString() + ' ';
+                    exportString += Environment.NewLine;
+                }
+                File.WriteAllText(saveFileDialog.FileName, exportString);
             }
         }
     }
