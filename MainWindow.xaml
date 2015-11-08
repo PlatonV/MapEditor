@@ -20,17 +20,19 @@
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" Background="DarkGray">
             <StackPanel>
                 <Label FontSize="24" FontWeight="Bold" HorizontalContentAlignment="Center">Map Editor</Label>
-                <Button x:Name="btn_Save" Height="50px" FontSize="16" Margin="5px" Click="btn_Save_Click">Save</Button>
-                <Button x:Name="btn_Open" Height="50px" FontSize="16" Margin="5px">Open</Button>
-                <Button x:Name="btn_Reset" Height="50px" FontSize="16" Margin="5px">Reset</Button>
+                <Button x:Name="btn_New" Height="50px" FontSize="16" Margin="5px" Click="btn_New_Click">New Map</Button>
+                <Button x:Name="btn_Open" Height="50px" FontSize="16" Margin="5px" Click="btn_Open_Click">Open</Button>
+                <Button x:Name="btn_Randomize" Height="50px" FontSize="16" Margin="5px" Click="btn_Randomize_Click" IsEnabled="False">Randomize</Button>
+                <Button x:Name="btn_Save" Height="50px" FontSize="16" Margin="5px" Click="btn_Save_Click" IsEnabled="False">Save</Button>
+                <Button x:Name="btn_Reset" Height="50px" FontSize="16" Margin="5px" IsEnabled="False" Click="btn_Reset_Click">Reset</Button>
                 <Label>Block type:</Label>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel>
-                        <Button x:Name="btn_Red" Background="Red" Width="50" Height="50" Margin="5px" BorderBrush="WhiteSmoke"></Button>
+                        <Button x:Name="btn_Red" Background="Red" Width="50" Height="50" Margin="5px" BorderBrush="WhiteSmoke" IsEnabled="False"></Button>
                         <Label HorizontalAlignment="Center">1</Label>
                     </StackPanel>
                     <StackPanel>
-                        <Button x:Name="btn_Black" Background="Black" Width="50" Height="50" Margin="5px" BorderBrush="WhiteSmoke"></Button>
+                        <Button x:Name="btn_Black" Background="Black" Width="50" Height="50" Margin="5px" BorderBrush="WhiteSmoke" IsEnabled="False"></Button>
                         <Label HorizontalAlignment="Center">2</Label>
                     </StackPanel>
                 </StackPanel>

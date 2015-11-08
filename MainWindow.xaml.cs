@@ -1,18 +1,10 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace MapEditor
@@ -31,10 +23,13 @@ namespace MapEditor
         public MainWindow()
         {
             InitializeComponent();
+        }
 
-            mat_width = 10;
-            mat_height = 10;
-            cell_size = 800 / mat_height;
+        private void InitMap(int width, int height)
+        {
+            mat_width = width;
+            mat_height = height;
+            cell_size = Math.Min(800 / mat_height, 1280 * 3 / 4 / mat_width);
             selectedBlock = 1;
 
             for (int i = 0; i <= mat_width * cell_size; i += cell_size)
@@ -70,21 +65,37 @@ namespace MapEditor
             }
         }
 
+        private void ResetMap()
+        {
+            for (int i = 0; i < mat_height; ++i)
+            {
+                for (int j = 0; j < mat_width; ++j)
+                {
+                    RemoveBlock(j * cell_size, i * cell_size);
+                    mat[i, j] = 0;
+                }
+            }
+        }
+
         private void PutBlock(int x, int y)
         {
-            mat[y / cell_size, x / cell_size] = selectedBlock;
-
-            Rectangle rect = new Rectangle()
+            if (mat[y / cell_size, x / cell_size] != selectedBlock)
             {
-                Width = cell_size,
-                Height = cell_size,
-                Fill = Brushes.Red
-            };
+                mat[y / cell_size, x / cell_size] = selectedBlock;
 
-            Canvas.SetLeft(rect, x / cell_size * cell_size);
-            Canvas.SetTop(rect, y / cell_size * cell_size);
+                Rectangle rect = new Rectangle()
+                {
+                    Width = cell_size,
+                    Height = cell_size,
+                    Fill = Brushes.Red
+                };
 
-            Canvas.Children.Add(rect);
+                Canvas.SetLeft(rect, x / cell_size * cell_size);
+                Canvas.SetTop(rect, y / cell_size * cell_size);
+
+                Canvas.Children.Add(rect);
+            }
+
         }
 
         private void RemoveBlock(int x, int y)
@@ -109,16 +120,35 @@ namespace MapEditor
             int y = (int)e.GetPosition(c).Y;
 
             if (Mouse.LeftButton == MouseButtonState.Pressed && x < cell_size * mat_width
-                && y < cell_size * mat_height && mat[x / cell_size, y / cell_size] == 0)
+                && y < cell_size * mat_height)
             {
                 PutBlock(x, y);
             }
 
             if (Mouse.RightButton == MouseButtonState.Pressed && x < cell_size * mat_width
-                && y < cell_size * mat_height && mat[x / cell_size, y / cell_size] != 0)
+                && y < cell_size * mat_height)
             {
                 RemoveBlock(x, y);
             }
+        }
+
+        private void btn_New_Click(object sender, RoutedEventArgs e)
+        {
+            NewMapDialog dialog = new NewMapDialog();
+
+            if (dialog.ShowDialog() == true)
+            {
+                InitMap(dialog.MapWidth, dialog.MapHeight);
+                btn_New.IsEnabled = true;
+                btn_Reset.IsEnabled = true;
+                btn_Save.IsEnabled = true;
+                btn_Randomize.IsEnabled = true;
+            }
+        }
+
+        private void btn_Open_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
         private void btn_Save_Click(object sender, RoutedEventArgs e)
@@ -137,6 +167,16 @@ namespace MapEditor
                 }
                 File.WriteAllText(saveFileDialog.FileName, exportString);
             }
+        }
+
+        private void btn_Randomize_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btn_Reset_Click(object sender, RoutedEventArgs e)
+        {
+            ResetMap();
         }
     }
 }
